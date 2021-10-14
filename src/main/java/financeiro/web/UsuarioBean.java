@@ -1,7 +1,10 @@
 package financeiro.web;
 
+import java.util.Map;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
@@ -13,16 +16,25 @@ public class UsuarioBean {
 	private String email;
 	private String senha;
 	private String confirmaSenha;
+	@ManagedProperty(value = "#{param}")
+	private Map<String, String> parametros;
+
+	public Map<String, String> getParametros() {
+		return parametros;
+	}
+
+	public void setParametros(Map<String, String> parametros) {
+		this.parametros = parametros;
+	}
 
 	public String novo() {
 	
-		return "usuario";
+		return "usuario?faces-redirect=true";
 	}
 	
-	private String salvar() {
-		
+	public String salvar() {
 		FacesContext context = FacesContext.getCurrentInstance();
-		if(this.senha.equalsIgnoreCase(confirmaSenha)) {
+		if(!this.senha.equalsIgnoreCase(confirmaSenha)) {
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
 					"Senha confirmada incorretamente!", ""));
 			return "usuario";
