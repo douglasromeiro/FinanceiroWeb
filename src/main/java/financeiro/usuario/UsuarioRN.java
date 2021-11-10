@@ -13,7 +13,7 @@ public class UsuarioRN {
 		
 	}
 	
-	public Usuario usuario(Integer codigo) {
+	public Usuario carregar(Integer codigo) {
 		return this.usuarioDAO.carregar(codigo);
 		
 	}

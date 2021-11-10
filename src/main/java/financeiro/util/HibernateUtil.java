@@ -2,7 +2,6 @@ package financeiro.util;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
-import org.hibernate.cfg.Configuration;
 
 public class HibernateUtil {
 
@@ -12,6 +11,7 @@ public class HibernateUtil {
 		try {
 			AnnotationConfiguration cfg = new AnnotationConfiguration();
 			cfg.configure("hibernate.cfg.xml");
+			System.out.println("Conectado!");
 			return cfg.buildSessionFactory();
 
 		} catch (Throwable e) {

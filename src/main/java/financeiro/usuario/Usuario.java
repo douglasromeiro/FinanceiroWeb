@@ -2,7 +2,6 @@ package financeiro.usuario;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,39 +13,18 @@ import org.hibernate.annotations.NaturalId;
 public class Usuario implements Serializable {
 
 	private static final long serialVersionUID = -2276215792742363279L;
-	
 	@Id
 	@GeneratedValue
 	private Integer codigo;
 	private String nome;
 	private String email;
-	@NaturalId
+	@NaturalId 
 	private String login;
 	private String senha;
 	private Date nascimento;
 	private String celular;
 	private String idioma;
 	private boolean ativo;
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(ativo, celular, codigo, email, idioma, login, nascimento, nome, senha);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Usuario other = (Usuario) obj;
-		return ativo == other.ativo && Objects.equals(celular, other.celular) && Objects.equals(codigo, other.codigo)
-				&& Objects.equals(email, other.email) && Objects.equals(idioma, other.idioma)
-				&& Objects.equals(login, other.login) && Objects.equals(nascimento, other.nascimento)
-				&& Objects.equals(nome, other.nome) && Objects.equals(senha, other.senha);
-	}
 
 	public Integer getCodigo() {
 		return codigo;
@@ -119,4 +97,76 @@ public class Usuario implements Serializable {
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (ativo ? 1231 : 1237);
+		result = prime * result + ((celular == null) ? 0 : celular.hashCode());
+		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((idioma == null) ? 0 : idioma.hashCode());
+		result = prime * result + ((login == null) ? 0 : login.hashCode());
+		result = prime * result
+				+ ((nascimento == null) ? 0 : nascimento.hashCode());
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result + ((senha == null) ? 0 : senha.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Usuario other = (Usuario) obj;
+		if (ativo != other.ativo)
+			return false;
+		if (celular == null) {
+			if (other.celular != null)
+				return false;
+		} else if (!celular.equals(other.celular))
+			return false;
+		if (codigo == null) {
+			if (other.codigo != null)
+				return false;
+		} else if (!codigo.equals(other.codigo))
+			return false;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (idioma == null) {
+			if (other.idioma != null)
+				return false;
+		} else if (!idioma.equals(other.idioma))
+			return false;
+		if (login == null) {
+			if (other.login != null)
+				return false;
+		} else if (!login.equals(other.login))
+			return false;
+		if (nascimento == null) {
+			if (other.nascimento != null)
+				return false;
+		} else if (!nascimento.equals(other.nascimento))
+			return false;
+		if (nome == null) {
+			if (other.nome != null)
+				return false;
+		} else if (!nome.equals(other.nome))
+			return false;
+		if (senha == null) {
+			if (other.senha != null)
+				return false;
+		} else if (!senha.equals(other.senha))
+			return false;
+		return true;
+	}
+
 }
