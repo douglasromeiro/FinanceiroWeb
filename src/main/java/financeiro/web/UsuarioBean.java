@@ -1,5 +1,7 @@
 package financeiro.web;
 
+import java.util.List;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -13,29 +15,58 @@ import financeiro.usuario.UsuarioRN;
 public class UsuarioBean {
 	private Usuario usuario = new Usuario();
 	private String confirmarSenha;
+	private List<Usuario> lista;
+	private String destinoSalvar;
 
-	public String novo() { 
+	public String novo() {
+		this.destinoSalvar = "usuarioSucesso";
 		this.usuario = new Usuario();
 		this.usuario.setAtivo(true);
-		return "/publico/usuario"; 
+		return "usuario";
 	}
-	public String salvar() { 
-		FacesContext context = FacesContext.getCurrentInstance();
 
+	public String editar() {
+		this.confirmarSenha = this.usuario.getSenha();
+		return "/publico/usuario";
+	}
+
+	public String salvar() {
+		FacesContext context = FacesContext.getCurrentInstance();
 		String senha = this.usuario.getSenha();
-		if (!senha.equals(this.confirmarSenha)) { 
+		if (!senha.equals(this.confirmarSenha)) {
 			FacesMessage facesMessage = new FacesMessage("A senha não foi confirmada corretamente");
 			context.addMessage(null, facesMessage);
-			return null; 
+			return null;
 		}
-
 		UsuarioRN usuarioRN = new UsuarioRN();
-		usuarioRN.salvar(this.usuario); 
-
-		return "usuariosucesso"; 
+		usuarioRN.salvar(this.usuario);
+		return this.destinoSalvar;
+	}
+	
+	public String excluir() {
+		UsuarioRN usuarioRN = new UsuarioRN();
+		usuarioRN.excluir(usuario);
+		return null;
+	}
+	
+	public String ativar() {
+		if(this.usuario.isAtivo()) {
+			this.usuario.setAtivo(false);
+		}else {
+			this.usuario.setAtivo(true);
+		}
+		UsuarioRN usuarioRN = new UsuarioRN();
+		usuarioRN.salvar(this.usuario);
+		return null;
+	}
+	public List<Usuario> getLista(){
+		if(this.lista == null) {
+			UsuarioRN usuarioRN = new UsuarioRN();
+			this.lista = usuarioRN.listar();
+		}
+		return this.lista;
 	}
 
-	
 	public Usuario getUsuario() {
 		return usuario;
 	}
@@ -50,6 +81,14 @@ public class UsuarioBean {
 
 	public void setConfirmarSenha(String confirmarSenha) {
 		this.confirmarSenha = confirmarSenha;
+	}
+	
+	public String getDestinoSalvar() {
+		return destinoSalvar;
+	}
+
+	public void setDestinoSalvar(String destinoSalvar) {
+		this.destinoSalvar = destinoSalvar;
 	}
 
 }
