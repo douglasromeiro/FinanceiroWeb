@@ -45,6 +45,23 @@
 				<a href="mailto:#{usuario.email}">#{usuario.email}</a>
 			</h:column>
 			<h:column>
+				<f:facet name="header">Permissões</f:facet>
+				<h:commandLink
+					action="#{usuarioBean.atribuiPermissao(usuario, 'ROLE_ADMINISTRADOR')}"
+					title="Permissão Administrador">
+					<h:graphicImage libraty="imagens"
+						name="ROLE_ADMINISTRADOR_#{usuarioBean.atribuiPermissao(usuario, 'ROLE_ADMINISTRADOR')}.png"
+						style="border: 0" />
+				</h:commandLink>
+				<h:commandLink
+					action="#{usuarioBean.atribuiPermissao(usuario, 'ROLE_USUARIO_VIP')}"
+					title="Permissão Administrador">
+					<h:graphicImage libraty="imagens"
+						name="ROLE_USUARIO_VIP_#{usuarioBean.atribuiPermissao(usuario, 'ROLE_USUARIO_VIP')}.png"
+						style="border: 0" />
+				</h:commandLink>
+			</h:column>
+			<h:column>
 				<h:commandLink action="#{usuarioBean.editar}">
 					<h:graphicImage library="imagens" name="editar16.png"
 						style="border:0" />
@@ -56,7 +73,7 @@
 			</h:column>
 			<h:column>
 				<h:commandLink action="#{usuarioBean.excluir}"
-					onclick="if (!confirm('Confirma a exclu~sao do usuário #{usuario.nome}?')) return false;">
+					onclick="if (!confirm('Confirma a exclusão do usuário #{usuario.nome}?')) return false;">
 					<h:graphicImage library="imagens" name="excluir16.png"
 						style="border:0" />
 					<f:setPropertyActionListener target="#{usuarioBean.usuario}"

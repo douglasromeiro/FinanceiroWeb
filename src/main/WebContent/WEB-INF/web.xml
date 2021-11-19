@@ -34,11 +34,10 @@
 		<param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
 		<param-value>true</param-value>
 	</context-param>
-	<welcome-file-list>
-		<welcome-file>index.jsf</welcome-file>
-		<welcome-file>index.html</welcome-file>
-		<welcome-file>index.htm</welcome-file>
-	</welcome-file-list>
+	<context-param>
+		<param-name>con.sun.faces.expressionFactiory</param-name>
+		<param-value>con.sun.el.expressionFactioryImpl</param-value>
+	</context-param>
 	<resource-ref>
 		<description>DataSource FinanceiroDB</description>
 		<res-ref-name>jdbc/FinanceiroDB</res-ref-name>
@@ -51,19 +50,26 @@
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-			/WEB-INF/applicationContext.xml
-			/WEB-INF/applicationContext-security.xml
-		</param-value>
+		/WEB-INF/applicationContext.xml
+		/WEB-INF/applicationContext-security.xml
+	</param-value>
 	</context-param>
 	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>
-		<filter-class>org.springframework.webfilter.DelegatingFilterProxy</filter-class>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
 	</filter>
 	<filter-mapping>
-		<filter-name>springSecutiryFilterChain</filter-name>
+		<filter-name>springSecurityFilterChain</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+
+
+	<welcome-file-list>
+		<welcome-file>index.jsf</welcome-file>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+	</welcome-file-list>
 </web-app>

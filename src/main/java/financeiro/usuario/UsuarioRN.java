@@ -23,12 +23,13 @@ public class UsuarioRN {
 		
 	}
 	
-	public void salvar(Usuario usuário) {
-		Integer codigo = usuário.getCodigo();
+	public void salvar(Usuario usuario) {
+		Integer codigo = usuario.getCodigo();
 		if(codigo == null || codigo == 0) {
-			this.usuarioDAO.salvar(usuário);
+			usuario.getPermissao().add("ROLE_USUARIO");
+			this.usuarioDAO.salvar(usuario);
 		}else {
-			this.usuarioDAO.atualizar(usuário);
+			this.usuarioDAO.atualizar(usuario);
 		}
 	}
 	
