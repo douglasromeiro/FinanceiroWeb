@@ -14,6 +14,15 @@
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.jsf</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>Resource Servlet</servlet-name>
+		<servlet-class>org.primefaces.resource.ResourceServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Resource Servlet</servlet-name>
+		<url-pattern>/primefaces_resource/*</url-pattern>
+	</servlet-mapping>
 	<filter>
 		<filter-name>conexaoFilter</filter-name>
 		<filter-class>financeiro.web.filter.ConexaoHibernateFilter</filter-class>
@@ -37,6 +46,10 @@
 	<context-param>
 		<param-name>con.sun.faces.expressionFactiory</param-name>
 		<param-value>con.sun.el.expressionFactioryImpl</param-value>
+	</context-param>
+		<context-param>
+		<param-name>com.sun.faces.allowTextChildren</param-name>
+		<param-value>true</param-value>
 	</context-param>
 	<resource-ref>
 		<description>DataSource FinanceiroDB</description>

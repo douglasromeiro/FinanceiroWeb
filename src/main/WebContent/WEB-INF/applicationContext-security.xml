@@ -18,7 +18,7 @@
 	</http>
 	<authentication-manager>
 		<authentication-provider>
-		<password-encoder hash="md5" />
+   <password-encoder hash="md5"/>
 			<jdbc-user-service data-source-ref="financeiroDataSource" 
 				authorities-by-username-query="SELECT u.email p.permissao 
 																	FROM usuario u, usuario_permissao p 
