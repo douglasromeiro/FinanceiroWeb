@@ -33,10 +33,9 @@ public class ChequeDAOHibernate implements ChequeDAO {
 		return  (Cheque) this.sessao.get(Cheque.class, chequeId);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Cheque> listar(Conta conta) {
-		Criteria criteria = this.sessao.createCriteria(Conta.class);
+		Criteria criteria = this.sessao.createCriteria(Cheque.class);
 		criteria.add(Restrictions.eq("conta", conta));
 		return criteria.list();
 	}

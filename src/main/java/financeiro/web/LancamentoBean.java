@@ -29,7 +29,6 @@ import financeiro.util.RNException;
 public class LancamentoBean implements Serializable {
 	private static final long serialVersionUID = -3050807461213326560L;
 	private List<Lancamento> lista;
-	private Conta conta;
 	private List<Double> saldos = new ArrayList<Double>();;
 	private float saldoGeral;
 	private Lancamento editado = new Lancamento();
@@ -37,18 +36,14 @@ public class LancamentoBean implements Serializable {
 	private List<Lancamento> listaFuturos;
 	private Integer numeroCheque;
 
-	@ManagedProperty(value = "#{contextoBean}")
-	private ContextoBean contextoBean;
-
 	public LancamentoBean() {
 		this.novo();
 	}
 
-	public String novo() {
+	public void novo() {
 		this.editado = new Lancamento();
 		this.editado.setData(new Date());
 		this.numeroCheque = null;
-		return null;
 	}
 
 	public void editar() {
@@ -60,22 +55,25 @@ public class LancamentoBean implements Serializable {
 	}
 
 	public void salvar() {
-		this.editado.setUsuario(this.contextoBean.getUsuarioLogado());
-		this.editado.setConta(this.contextoBean.getContaAtiva());
+		ContextoBean contextoBean = ContextoUtil.getContextoBean();
+		this.editado.setUsuario(contextoBean.getUsuarioLogado());
+		this.editado.setConta(contextoBean.getContaAtiva());
 
 		ChequeRN chequeRN = new ChequeRN();
 		ChequeId chequeId = null;
 		if (this.numeroCheque != null) {
 			chequeId = new ChequeId();
-			chequeId.setConta(this.contextoBean.getContaAtiva().getConta());
+			chequeId.setConta(contextoBean.getContaAtiva().getConta());
 			chequeId.setCheque(this.numeroCheque);
 			Cheque cheque = chequeRN.carregar(chequeId);
 			FacesContext context = FacesContext.getCurrentInstance();
 			if (cheque == null) {
-				context.addMessage(null, new FacesMessage("Cheque não cadastrado"));
+				FacesMessage msg = new FacesMessage("Cheque não cadastrado");
+				context.addMessage(null, msg);
 				return;
 			} else if (cheque.getSituacao() == Cheque.SITUACAO_CHEQUE_CANCELADO) {
-				context.addMessage(null, new FacesMessage("Cheque já cancelado"));
+				FacesMessage msg = new FacesMessage("Cheque já cancelado");
+				context.addMessage(null, msg);
 				return;
 			} else {
 				this.editado.setCheque(cheque);
@@ -120,12 +118,14 @@ public class LancamentoBean implements Serializable {
 	public void mudouCheque(ValueChangeEvent event) {
 		Integer chequeAnterior = (Integer) event.getOldValue();
 		if (chequeAnterior != null) {
+			ContextoBean contextoBean = ContextoUtil.getContextoBean();
 			ChequeRN chequeRN = new ChequeRN();
 			try {
 				chequeRN.desvinculaLancamento(contextoBean.getContaAtiva(), chequeAnterior);
 			} catch (RNException e) {
 				FacesContext context = FacesContext.getCurrentInstance();
-				context.addMessage(null, new FacesMessage(e.getMessage()));
+				FacesMessage msg = new FacesMessage(e.getMessage());
+				context.addMessage(null, msg);
 				return;
 			}
 		}
@@ -138,8 +138,9 @@ public class LancamentoBean implements Serializable {
 	}
 
 	public List<Lancamento> getLista() {
-		if (this.lista == null || this.conta != this.contextoBean.getContaAtiva()) {
-			this.conta = this.contextoBean.getContaAtiva();
+		if (this.lista == null) {
+			ContextoBean contextoBean = ContextoUtil.getContextoBean();
+			Conta conta = contextoBean.getContaAtiva();
 
 			Calendar dataSaldo = new GregorianCalendar();
 			dataSaldo.add(Calendar.MONTH, -1);
@@ -149,8 +150,8 @@ public class LancamentoBean implements Serializable {
 			inicio.add(Calendar.MONTH, -1);
 
 			LancamentoRN lancamentoRN = new LancamentoRN();
-			this.saldoGeral = lancamentoRN.saldo(this.conta, dataSaldo.getTime());
-			this.lista = lancamentoRN.listar(this.conta, inicio.getTime(), null);
+			this.saldoGeral = lancamentoRN.saldo(conta, dataSaldo.getTime());
+			this.lista = lancamentoRN.listar(conta, inicio.getTime(), null);
 
 			Categoria categoria = null;
 			double saldo = this.saldoGeral;
@@ -162,14 +163,6 @@ public class LancamentoBean implements Serializable {
 			}
 		}
 		return this.lista;
-	}
-
-	public Conta getConta() {
-		return conta;
-	}
-
-	public void setConta(Conta conta) {
-		this.conta = conta;
 	}
 
 	public List<Double> getSaldos() {
@@ -202,14 +195,6 @@ public class LancamentoBean implements Serializable {
 
 	public void setNumeroCheque(Integer numeroCheque) {
 		this.numeroCheque = numeroCheque;
-	}
-
-	public ContextoBean getContextoBean() {
-		return contextoBean;
-	}
-
-	public void setContextoBean(ContextoBean contextoBean) {
-		this.contextoBean = contextoBean;
 	}
 
 	public void setLista(List<Lancamento> lista) {

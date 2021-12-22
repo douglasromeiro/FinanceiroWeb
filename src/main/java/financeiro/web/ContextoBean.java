@@ -22,8 +22,22 @@ import financeiro.usuario.UsuarioRN;
 public class ContextoBean implements Serializable { 
 
 	private static final long serialVersionUID = -2071855184464371947L; 
-	private List<Locale>	idiomas; 
+	
+	private Usuario usuarioLogado = null;
+	private Conta contaAtiva = null;
+	private Locale localizacao = null;
+	private List<Locale> idiomas; 
 	private int codigoContaAtiva = 0;
+	
+	public Locale getLocaleUsuario() {
+		if(this.localizacao == null) {
+			Usuario usuario = this.getUsuarioLogado();
+			String idioma = usuario.getIdioma();
+			String[] info = idioma.split("_");
+			this.localizacao = new Locale(info[0], info[1]);
+		}
+		return this.localizacao;
+	}
 
 	public Usuario getUsuarioLogado() { 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -51,14 +65,14 @@ public class ContextoBean implements Serializable {
 	}
 	
 	public void setIdiomaUsuario(String idioma) {
-		Usuario usuario = this.getUsuarioLogado();
-		usuario.setIdioma(idioma);
 		UsuarioRN usuarioRN = new UsuarioRN();
-		usuarioRN.salvar(usuario);
+		this.usuarioLogado = usuarioRN.carregar(this.getUsuarioLogado().getCodigo());
+		this.usuarioLogado.setIdioma(idioma);
+		usuarioRN.salvar(usuarioLogado);
 		
 		String[] info = idioma.split("_");
 		Locale locale = new Locale(info[0], info[1]);
-
+		
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.getViewRoot().setLocale(locale);
 	}

@@ -3,11 +3,11 @@ package financeiro.web;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
 import financeiro.conta.Conta;
 import financeiro.conta.ContaRN;
+import financeiro.util.ContextoUtil;
 
 @ManagedBean
 @RequestScoped
@@ -15,11 +15,10 @@ public class ContaBean {
 	
 	private Conta selecionada = new Conta();
 	private List<Conta> lista = null;
-	@ManagedProperty(value = "#{contextoBean}")
-	private ContextoBean contextoBean;
 
 	public String salvar() {
-		this.selecionada.setUsuario(this.contextoBean.getUsuarioLogado());
+		ContextoBean contextoBean = ContextoUtil.getContextoBean();
+		this.selecionada.setUsuario(contextoBean.getUsuarioLogado());
 		ContaRN contaRN = new ContaRN();
 		contaRN.salvar(this.selecionada);
 		this.selecionada = new Conta();
@@ -51,9 +50,10 @@ public class ContaBean {
 	}
 
 	public List<Conta> getLista() {
+		ContextoBean contextoBean = ContextoUtil.getContextoBean();
 		if (this.lista == null) {
 			ContaRN contaRN = new ContaRN();
-			this.lista = contaRN.listar(this.contextoBean.getUsuarioLogado());
+			this.lista = contaRN.listar(contextoBean.getUsuarioLogado());
 		}
 		return this.lista;
 
@@ -63,13 +63,6 @@ public class ContaBean {
 		this.lista = lista;
 	}
 
-	public ContextoBean getContextoBean() {
-		return contextoBean;
-	}
-
-	public void setContextoBean(ContextoBean contextoBean) {
-		this.contextoBean = contextoBean;
-	}
 
 }
 
