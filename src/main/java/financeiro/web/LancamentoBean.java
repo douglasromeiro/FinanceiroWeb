@@ -201,5 +201,6 @@ public class LancamentoBean implements Serializable {
 		this.lista = lista;
 	}
 
+	//Alterações para subir pro git
 
 }
