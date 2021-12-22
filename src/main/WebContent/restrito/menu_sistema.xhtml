@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
@@ -6,13 +6,16 @@
 	xmlns:sec="http://www.springframework.org/security/facelets/tags">
 <ui:composition>
 	<sec:ifAnyGranted roles="ROLE_USUARIO"> 
-		<h:form id="menu">
+		<h:form>
 			<table width="100%">
 			<tr><td>
 				<h:commandButton value="Contas" action="/restrito/conta"/> 
+				<h:commandButton value="Categorias" action="/restrito/categoria" />
+				<h:commandButton value="Lançamentos" action="/restrito/lancamento"/>
+				<h:commandButton value="Cheque" action="/restrito/cheque"/>
 				<h:selectOneMenu value="#{contextoBean.contaAtiva.conta}"
-					valueChangeListener="#{contextoBean.setContaAtiva}" 
-					rendered="#{!empty contextoBean}"
+					valueChangeListener="#{contextoBean.changeContaAtiva}" 
+					rendered="#{not empty contextoBean and not empty contextoBean.contaAtiva}"
 					onchange="submit()">
 					<f:selectItems value="#{contaBean.lista}" 
 						var="conta" itemValue="#{conta.conta}" itemLabel="#{conta.descricao}"/>

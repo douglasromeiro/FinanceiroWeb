@@ -4,13 +4,14 @@ import java.util.Date;
 import java.util.List;
 
 import financeiro.usuario.Usuario;
+import financeiro.util.DAOFactory;
 
 public class ContaRN {
 
 	private ContaDAO contaDAO;
 
 	public ContaRN() {
-		this.contaDAO = contaDAO;
+		this.contaDAO = DAOFactory.criarContaDAO();
 	}
 	
 	public List<Conta> listar(Usuario usuario){
