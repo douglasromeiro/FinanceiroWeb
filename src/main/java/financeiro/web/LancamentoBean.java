@@ -1,5 +1,6 @@
 package financeiro.web;
 
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -9,11 +10,10 @@ import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
+
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
-
 import financeiro.categoria.Categoria;
 import financeiro.cheque.Cheque;
 import financeiro.cheque.ChequeId;
@@ -26,8 +26,11 @@ import financeiro.util.RNException;
 
 @ManagedBean(name = "lancamentoBean")
 @ViewScoped
-public class LancamentoBean implements Serializable {
-	private static final long serialVersionUID = -3050807461213326560L;
+public class LancamentoBean implements Serializable{
+	
+
+	private static final long serialVersionUID = -2214329188025895494L;
+	
 	private List<Lancamento> lista;
 	private List<Double> saldos = new ArrayList<Double>();;
 	private float saldoGeral;
@@ -42,7 +45,7 @@ public class LancamentoBean implements Serializable {
 
 	public void novo() {
 		this.editado = new Lancamento();
-		this.editado.setData(new Date());
+		this.editado.setData(new Date(System.currentTimeMillis()));
 		this.numeroCheque = null;
 	}
 

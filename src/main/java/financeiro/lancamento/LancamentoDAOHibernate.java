@@ -60,18 +60,19 @@ public class LancamentoDAOHibernate implements LancamentoDAO{
 	public float saldo(Conta conta, Date data) {
 		StringBuffer sql = new StringBuffer();
 		sql.append("select sum(l.valor * c.fator)");
-		sql.append(" from LANCAMENTO L,");
+		sql.append(" from LANCAMENTO l,");
+		sql.append(" CATEGORIA c");
 		sql.append(" where l.categoria = c.codigo");
 		sql.append(" and l.conta = :conta");
-		sql.append(" and l.data <= >data");
+		sql.append(" and l.data <= :data");
 		SQLQuery query = this.sessao.createSQLQuery(sql.toString());
-		query.setParameter("conta", conta);
+		query.setParameter("conta", conta.getConta());
 		query.setParameter("data", data);
 		BigDecimal saldo = (BigDecimal) query.uniqueResult();
 		if(saldo != null) {
 			return saldo.floatValue();
 		}
-		return 0;
+		return 0f;
 	}
 
 }

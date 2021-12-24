@@ -61,7 +61,7 @@ public class ContextoBean implements Serializable {
 		while (locales.hasNext()) {
 			this.idiomas.add(locales.next());
 		}
-		return this.idiomas;
+		return idiomas;
 	}
 	
 	public void setIdiomaUsuario(String idioma) {

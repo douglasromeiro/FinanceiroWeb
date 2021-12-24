@@ -146,6 +146,5 @@ public class Lancamento implements Serializable {
 				&& Objects.equals(usuario, other.usuario) && Objects.equals(valor, other.valor);
 	}
 
-
-
+	
 }
