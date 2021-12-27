@@ -37,7 +37,7 @@ public class Lancamento implements Serializable {
 
 	@ManyToOne
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JoinColumn(name = "usuario", nullable = false)
+	@JoinColumn(name="cod_usuario", nullable=true)
 	@ForeignKey(name = "fk_lancamento_usuario")
 	private Usuario usuario;
 	

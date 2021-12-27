@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+
+<ui:composition>
+	<h:panelGrid style="margin: 0 auto;">
+		<h:form id="graficosAcao">
+			<p:tabView>
+				<p:tab title="Gráfico Diário">
+					<h:graphicImage
+						value="http://ichart.finance.yahoo.com/z?=#{acaoBean.linkCodigoAcao}&amp;t=1d&amp:z=s" />
+				</p:tab>
+				<p:tab title="Gráfico Trimestral">
+					<h:graphicImage
+						value="http://ichart.finance.yahoo.com/z?=#{acaoBean.linkCodigoAcao}&amp;t=3d&amp:z=s" />
+				</p:tab>
+				<p:tab title="Gráfico Anual">
+					<h:graphicImage
+						value="http://ichart.finance.yahoo.com/z?=#{acaoBean.linkCodigoAcao}&amp;t=1yd&amp:z=s" />
+				</p:tab>
+			</p:tabView>
+		</h:form>
+	</h:panelGrid>
+</ui:composition>
+</html>

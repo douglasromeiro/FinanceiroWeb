@@ -9,36 +9,34 @@ import financeiro.conta.Conta;
 import financeiro.conta.ContaRN;
 import financeiro.util.ContextoUtil;
 
-@ManagedBean
+@ManagedBean(name = "contaBean")
 @RequestScoped
 public class ContaBean {
 	
 	private Conta selecionada = new Conta();
 	private List<Conta> lista = null;
 
-	public String salvar() {
+	public void salvar() {
 		ContextoBean contextoBean = ContextoUtil.getContextoBean();
 		this.selecionada.setUsuario(contextoBean.getUsuarioLogado());
 		ContaRN contaRN = new ContaRN();
 		contaRN.salvar(this.selecionada);
 		this.selecionada = new Conta();
 		this.lista = null;
-		return null;
 	}
 
-	public String excluir() {
+	public void excluir() {
 		ContaRN contaRN = new ContaRN();
 		contaRN.excluir(this.selecionada);
 		this.selecionada = new Conta();
 		this.lista = null;
-		return null;
 	}
 
-	public String tornarFavorita() {
+	public void tornarFavorita() {
 		ContaRN contaRN = new ContaRN();
 		contaRN.tornarFavorita(this.selecionada);
 		this.selecionada = new Conta();
-		return null;
+
 	}
 
 	public Conta getSelecionada() {
@@ -50,8 +48,9 @@ public class ContaBean {
 	}
 
 	public List<Conta> getLista() {
-		ContextoBean contextoBean = ContextoUtil.getContextoBean();
 		if (this.lista == null) {
+			ContextoBean contextoBean = ContextoUtil.getContextoBean();
+			
 			ContaRN contaRN = new ContaRN();
 			this.lista = contaRN.listar(contextoBean.getUsuarioLogado());
 		}

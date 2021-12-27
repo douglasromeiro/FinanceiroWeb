@@ -3,6 +3,7 @@ package financeiro.usuario;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -31,14 +32,6 @@ public class Usuario implements Serializable {
 	private String senha;
 	private Date nascimento;
 	private String celular;
-	public Set<String> getPermissao() {
-		return permissao;
-	}
-
-	public void setPermissao(Set<String> permissao) {
-		this.permissao = permissao;
-	}
-
 	private String idioma;
 	private boolean ativo;
 	@ElementCollection(targetClass = String.class) 
@@ -121,24 +114,18 @@ public class Usuario implements Serializable {
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
 	}
+	
+	public Set<String> getPermissao() {
+		return permissao;
+	}
+
+	public void setPermissao(Set<String> permissao) {
+		this.permissao = permissao;
+	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (ativo ? 1231 : 1237);
-		result = prime * result + ((celular == null) ? 0 : celular.hashCode());
-		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + ((idioma == null) ? 0 : idioma.hashCode());
-		result = prime * result + ((login == null) ? 0 : login.hashCode());
-		result = prime * result
-				+ ((nascimento == null) ? 0 : nascimento.hashCode());
-		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
-		result = prime * result
-				+ ((permissao == null) ? 0 : permissao.hashCode());
-		result = prime * result + ((senha == null) ? 0 : senha.hashCode());
-		return result;
+		return Objects.hash(ativo, celular, codigo, email, idioma, login, nascimento, nome, permissao, senha);
 	}
 
 	@Override
@@ -150,54 +137,13 @@ public class Usuario implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Usuario other = (Usuario) obj;
-		if (ativo != other.ativo)
-			return false;
-		if (celular == null) {
-			if (other.celular != null)
-				return false;
-		} else if (!celular.equals(other.celular))
-			return false;
-		if (codigo == null) {
-			if (other.codigo != null)
-				return false;
-		} else if (!codigo.equals(other.codigo))
-			return false;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
-			return false;
-		if (idioma == null) {
-			if (other.idioma != null)
-				return false;
-		} else if (!idioma.equals(other.idioma))
-			return false;
-		if (login == null) {
-			if (other.login != null)
-				return false;
-		} else if (!login.equals(other.login))
-			return false;
-		if (nascimento == null) {
-			if (other.nascimento != null)
-				return false;
-		} else if (!nascimento.equals(other.nascimento))
-			return false;
-		if (nome == null) {
-			if (other.nome != null)
-				return false;
-		} else if (!nome.equals(other.nome))
-			return false;
-		if (permissao == null) {
-			if (other.permissao != null)
-				return false;
-		} else if (!permissao.equals(other.permissao))
-			return false;
-		if (senha == null) {
-			if (other.senha != null)
-				return false;
-		} else if (!senha.equals(other.senha))
-			return false;
-		return true;
+		return ativo == other.ativo && Objects.equals(celular, other.celular) && Objects.equals(codigo, other.codigo)
+				&& Objects.equals(email, other.email) && Objects.equals(idioma, other.idioma)
+				&& Objects.equals(login, other.login) && Objects.equals(nascimento, other.nascimento)
+				&& Objects.equals(nome, other.nome) && Objects.equals(permissao, other.permissao)
+				&& Objects.equals(senha, other.senha);
 	}
+
+
 
 }

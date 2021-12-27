@@ -1,7 +1,5 @@
 package financeiro.web.filter;
 
-import java.io.IOException;
-
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -15,16 +13,16 @@ import financeiro.util.HibernateUtil;
 
 public class ConexaoHibernateFilter implements Filter{
 	private SessionFactory sf;
-	
-	@Override
-	public void destroy() {
-		
-		
-	}
 
 	@Override
+	public void init(FilterConfig config) throws ServletException {
+		this.sf = HibernateUtil.getSessionFactory();
+		
+	}
+	
+	@Override
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
-			FilterChain chain) throws IOException, ServletException {
+			FilterChain chain) throws ServletException {
 		try{
 			this.sf.getCurrentSession().beginTransaction();
 			chain.doFilter(servletRequest, servletResponse);
@@ -32,8 +30,9 @@ public class ConexaoHibernateFilter implements Filter{
 			this.sf.getCurrentSession().close();
 		}catch(Throwable ex){
 			try{
-				if(this.sf.getCurrentSession().getTransaction().isActive())
+				if(this.sf.getCurrentSession().getTransaction().isActive()) {
 					this.sf.getCurrentSession().getTransaction().rollback();
+				}
 			}catch(Throwable t){
 				t.printStackTrace();
 			}
@@ -41,11 +40,10 @@ public class ConexaoHibernateFilter implements Filter{
 		}
 		
 	}
-
+	
 	@Override
-	public void init(FilterConfig config) throws ServletException {
-		this.sf = HibernateUtil.getSessionFactory();
-		
+	public void destroy() {
+
 	}
 	
 }
