@@ -11,6 +11,7 @@ import financeiro.conta.Conta;
 import financeiro.conta.ContaRN;
 import financeiro.usuario.Usuario;
 import financeiro.usuario.UsuarioRN;
+import financeiro.util.RNException;
 
 @ManagedBean(name = "usuarioBean")
 @RequestScoped
@@ -52,6 +53,17 @@ public class UsuarioBean {
 			this.conta.setFavorita(true); 
 			ContaRN contaRN = new ContaRN();
 			contaRN.salvar(this.conta);
+		}
+		
+		//Envia email após o cadastramento de um usuário novo
+		if(this.destinoSalvar.equals("usuarioSucesso")) {
+			try {
+				usuarioRN.enviarEmailPosCadastramento(this.usuario);
+			}catch (RNException e) {
+				FacesMessage facesMessage = new FacesMessage("Não foi possível enviar o e-mail de cadastro do usuário. Error: " + e.getMessage());
+				context.addMessage(null, facesMessage);
+				return null;
+			}
 		}
 		
 		return this.destinoSalvar;

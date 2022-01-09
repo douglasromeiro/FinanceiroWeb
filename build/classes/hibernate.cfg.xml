@@ -18,5 +18,6 @@
 		<mapping class="financeiro.categoria.Categoria"/>
 		<mapping class="financeiro.lancamento.Lancamento"/>
 		<mapping class="financeiro.cheque.Cheque"/>
+		<mapping class="financeira.bolsa.Acao"/>
 		</session-factory>
 </hibernate-configuration>
