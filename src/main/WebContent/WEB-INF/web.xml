@@ -4,92 +4,99 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
 	http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	version="3.1">
-	<display-name>financeiro</display-name>
-	<servlet>
-		<servlet-name>Faces Servlet</servlet-name>
-		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>Faces Servlet</servlet-name>
-		<url-pattern>*.jsf</url-pattern>
-	</servlet-mapping>
-	<servlet>
-		<servlet-name>Resource Servlet</servlet-name>
-		<servlet-class>org.primefaces.resource.ResourceServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>Resource Servlet</servlet-name>
-		<url-pattern>/primefaces_resource/*</url-pattern>
-	</servlet-mapping>
-	<filter>
-		<filter-name>conexaoFilter</filter-name>
-		<filter-class>financeiro.web.filter.ConexaoHibernateFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>conexaoFilter</filter-name>
-		<url-pattern>*.jsf</url-pattern>
-	</filter-mapping>
-	<context-param>
-		<param-name>javax.faces.PROJECT_STAGE</param-name>
-		<param-value>Development</param-value>
-	</context-param>
-	<context-param>
-		<param-name>javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name>
-		<param-value>true</param-value>
-	</context-param>
-	<context-param>
-		<param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
-		<param-value>true</param-value>
-	</context-param>
-	<context-param>
-		<param-name>con.sun.faces.expressionFactiory</param-name>
-		<param-value>con.sun.el.expressionFactioryImpl</param-value>
-	</context-param>
-		<context-param>
-		<param-name>com.sun.faces.allowTextChildren</param-name>
-		<param-value>true</param-value>
-	</context-param>
-	<resource-ref>
-		<description>DataSource FinanceiroDB</description>
-		<res-ref-name>jdbc/FinanceiroDB</res-ref-name>
-		<res-type>javax.sql.DataSource</res-type>
-		<res-auth>Container</res-auth>
-	</resource-ref>
-	
-	<resource-ref>
-		<description>Mail Session</description>
-		<res-ref-name>mail</res-ref-name>
-		<res-type>javax.mail.Session</res-type>
-		<res-auth>Container</res-auth>
-	</resource-ref>
-	
-	<!--Spring Security -->
-	
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>
-		/WEB-INF/applicationContext.xml
-		/WEB-INF/applicationContext-security.xml
-	</param-value>
-	</context-param>
-	<filter>
-		<filter-name>springSecurityFilterChain</filter-name>
-		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>springSecurityFilterChain</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
-
-
-	<welcome-file-list>
-		<welcome-file>index.jsf</welcome-file>
-		<welcome-file>index.html</welcome-file>
-		<welcome-file>index.htm</welcome-file>
-	</welcome-file-list>
+	  <display-name>FinanceiroWeb</display-name>
+  <servlet>
+    <display-name>FacesServlet</display-name>
+    <servlet-name>FacesServlet</servlet-name>
+    <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FacesServlet</servlet-name>
+    <url-pattern>*.jsf</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>Resource Servlet</servlet-name>
+  	<servlet-class>org.primefaces.resource.ResourceServlet</servlet-class>
+	<load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>Resource Servlet</servlet-name>
+  	<url-pattern>/primefaces_resources/*</url-pattern>
+  </servlet-mapping>
+  <context-param>
+  	<param-name>com.sun.faces.allowTextChildren</param-name>
+  	<param-value>true</param-value>
+  </context-param>
+  <context-param>
+    <param-name>javax.faces.PROJECT_STAGE</param-name>
+    <param-value>Development</param-value>
+  </context-param>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+  <filter>
+      <filter-name>conexaoFilter</filter-name>
+      <filter-class>financeiro.web.filter.ConexaoHibernateFilter</filter-class>
+  </filter>
+  <filter-mapping>
+      <filter-name>conexaoFilter</filter-name>
+      <url-pattern>*.jsf</url-pattern>
+  </filter-mapping>
+  <resource-ref>
+  	<description>DataSource FinanceiroDB</description>
+  	<res-ref-name>jdbc/FinanceiroDB</res-ref-name>
+  	<res-type>javax.sql.DataSource</res-type>
+  	<res-auth>Container</res-auth>
+  </resource-ref>
+  <resource-ref>
+  	<description>Mail Session</description>
+  	<res-ref-name>mail/Session</res-ref-name>
+  	<res-type>javax.mail.Session</res-type>
+  	<res-auth>Container</res-auth>
+  </resource-ref>
+  <!-- Spring Security -->
+  <context-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>
+          /WEB-INF/applicationContext.xml
+          /WEB-INF/applicationContext-security.xml
+      </param-value>
+  </context-param>
+  <filter>
+      <filter-name>springSecurityFilterChain</filter-name>
+      <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+  </filter>
+  <filter-mapping>
+      <filter-name>springSecurityFilterChain</filter-name>
+      <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <listener>
+      <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <context-param>
+      <param-name>com.sun.faces.expressionFactory</param-name>
+      <param-value>com.sun.el.ExpressionFactoryImpl</param-value>
+  </context-param>
+  
+  <listener>
+  	<listener-class>com.sun.xml.ws.transport.http.servlet.WSServletContextListener</listener-class>
+  </listener>
+  <servlet>
+  	<description>Webservices do Financeiro</description>
+  	<display-name>financeiroWS</display-name>
+  	<servlet-name>financeiroWS</servlet-name>
+  	<servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
+  	<load-on-startup>1</load-on-startup>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>financeiroWS</servlet-name>
+  	<url-pattern>/webservice/financeiroWS</url-pattern>
+  </servlet-mapping>
+  
+  <filter-mapping>
+  	<filter-name>conexaoFilter</filter-name>
+  	<url-pattern>/webservice/*</url-pattern>
+  </filter-mapping>
+   
 </web-app>
