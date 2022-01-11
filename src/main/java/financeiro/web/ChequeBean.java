@@ -10,9 +10,9 @@ import javax.faces.context.FacesContext;
 import financeiro.cheque.Cheque;
 import financeiro.cheque.ChequeRN;
 import financeiro.conta.Conta;
-import financeiro.util.ContextoUtil;
-import financeiro.util.MensagemUtil;
 import financeiro.util.RNException;
+import financeiro.web.util.ContextoUtil;
+import financeiro.web.util.MensagemUtil;
 
 
 @ManagedBean(name="chequeBean")

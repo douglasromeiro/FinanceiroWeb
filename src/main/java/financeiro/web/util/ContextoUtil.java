@@ -1,4 +1,4 @@
-package financeiro.util;
+package financeiro.web.util;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;

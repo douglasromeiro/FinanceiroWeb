@@ -5,90 +5,72 @@
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <ui:composition template="/templates/interna.xhtml">
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 	<ui:define name="titulo">
-		Cadastro de UsuÃ¡rios
+		Cadastro de usuários
 	</ui:define>
-	<ui:define name="corpo">
+	<ui:define name="corpo">	
 		<h:form id="cadastro">
-			
-			<h:inputHidden value="#{usuarioBean.usuario.codigo}" />
-			<h:inputHidden value="#{usuarioBean.usuario.ativo}" />
-			<h:inputHidden value="#{usuarioBean.destinoSalvar}" />
-
+			<h:messages/>
+			<h:inputHidden value="#{usuarioBean.usuario.codigo}"/>
+			<h:inputHidden value="#{usuarioBean.usuario.ativo}"/>
+			<h:inputHidden value="#{usuarioBean.destinoSalvar}"/>
 			<h:panelGrid columns="2">
-				<h:outputLabel value="Nome:" for="nome" />
-				<h:inputText id="nome" label="Nome"
-					value="#{usuarioBean.usuario.nome}" size="30" maxlength="30"
-					required="true" requiredMessage="VocÃª nÃ£o tem nome?">
-					<f:validateLength minimum="10" maximum="30" />
+				<h:outputLabel value="Nome:" for="nome"/>
+				<h:inputText id="nome" label="Nome" value="#{usuarioBean.usuario.nome}" size="30" maxlength="30" required="true" requiredMessage="Você não tem nome?">
+					<f:validateLength minimum="10" maximum="30"/>
 				</h:inputText>
-
-				<h:outputLabel value="Data Nascimento:" for="data" />
-				<h:inputText id="data" label="Data Nascimento"
-					value="#{usuarioBean.usuario.nascimento}" size="10" maxlength="10"
-					required="true">
-					<f:convertDateTime dateStyle="medium" />
+				
+				<h:outputLabel value="Data Nascimento:" for="data"/>
+				<h:inputText id="data" label="Data Nascimento" value="#{usuarioBean.usuario.nascimento}" size="10" maxlength="10" required="true">
+					<f:convertDateTime dateStyle="medium"/>
 				</h:inputText>
-
-				<h:outputLabel value="Celular:" for="celular" />
-				<h:inputText id="celular" label="Celular"
-					value="#{usuarioBean.usuario.celular}" size="10" />
-
-				<h:outputLabel value="e-Mail:" for="email" />
+				
+				<h:outputLabel value="Celular:" for="celular"/>
+				<h:inputText id="celular" label="Celular" value="#{usuarioBean.usuario.celular}" size="10"/>
+				
+				<h:outputLabel label="e-Mail" for="email" value="E-mail:"/>
 				<h:panelGroup>
-					<h:inputText id="email" label="e-Mail"
-						value="#{usuarioBean.usuario.email}" size="50" maxlength="50"
-						required="true" validatorMessage="e-mail invÃ¡lido">
-						<f:validateRegex pattern="[a-zA-Z0-9\-\_\.]+@[a-zA-Z0-9\-\_\.]+" />
+					<h:inputText id="email" label="e-Mail" value="#{usuarioBean.usuario.email}" size="50" maxlength="50" required="true" validatorMessage="e-mail inválido">
+						<f:validateRegex pattern="[a-zA-Z0-9\-\_\.]+@[a-zA-Z0-9\-\_\.]+"></f:validateRegex>
 					</h:inputText>
-					<h:message for="email" />
+					<h:message for="email"/>
 				</h:panelGroup>
-
-				<h:outputLabel value="Idioma:" for="idioma" />
+				
+				<h:outputLabel value="Idioma:" for="idioma"/>
 				<h:selectOneMenu id="idioma" value="#{usuarioBean.usuario.idioma}">
-					<f:selectItem itemValue="pt_BR" itemLabel="PortuguÃªs" />
-					<f:selectItem itemValue="en_US" itemLabel="English" />
-					<f:selectItem itemValue="es_ES" itemLabel="Espanol" />
+					<f:selectItem itemValue="pt_BR" itemLabel="Português"/>
+					<f:selectItem itemValue="en_US" itemLabel="English"/>
+					<f:selectItem itemValue="es_ES" itemLabel="Espanol"/>
 				</h:selectOneMenu>
-
-				<h:outputLabel value="Login:" for="login" />
-				<h:inputText id="login" label="Login"
-					value="#{usuarioBean.usuario.login}" size="15" maxlength="15"
-					required="true"
-					validatorMessage="Login deve ter no mÃ­nimo 5 e no mÃ¡ximo 15 caracteres e sÃ³ pode ter os sÃ­mbolos '.' e '_'.">
-					<f:validateRegex pattern="([a-z]|[0-9]|[.]|[_]){5,15}" />
-				</h:inputText>
-
-				<h:outputLabel value="Senha:" for="senha" />
-				<h:inputSecret id="senha" label="Senha"
-					value="#{usuarioBean.usuario.senha}" size="10" maxlength="10"
-					required="true" redisplay="true" />
-
-				<h:outputLabel value="Confirmar Senha:" for="confirmarsenha" />
-				<h:inputSecret id="confirmarsenha" label="Confirmar Senha"
-					value="#{usuarioBean.confirmarSenha}" size="10" maxlength="10"
-					required="true" redisplay="true" />
+				
+				<h:outputLabel value="Login" for="Login"/>
+				<h:inputText id="login"
+							 label="Login"
+							 value="#{usuarioBean.usuario.login}"
+							 size="15" maxlength="15" requiredMessage="true"
+							>	 	
+				</h:inputText>	
+				
+				<h:outputLabel value="Senha:" for="senha"/>
+				<h:inputSecret id="senha" label="Senha" value="#{usuarioBean.usuario.senha}" size="10" maxlength="10" required="true" redisplay="true"/>
+				
+				<h:outputLabel value="Confirmar Senha:" for="confirmarsenha"/>	
+				<h:inputSecret id="confirmarsenha" label="Confirmar Senha" value="#{usuarioBean.confirmaSenha}" size="10" maxlength="10" required="true" redisplay="10"/>
 			</h:panelGrid>
-
 			<h:panelGroup rendered="#{empty contextoBean.usuarioLogado}">
-				<fieldset>
-					<legend>ContaInicial</legend>
+				<fieldset><legend>Conta inicial</legend>
 					<h:panelGrid columns="2">
-						<h:outputLabel value="DescriÃ§Ã£o: " for="descricao" />
-						<h:inputText id="descricao" label="DescriÃ§Ã£o"
-							value="#{usuarioBean.conta.descricao}" required="true"
-							maxlength="45" />
-
-						<h:outputLabel value="Saldo Inicial:  " for="saldoInicial" />
-						<h:inputText id="saldoInicial"
-							value="#{usuarioBean.conta.saldoInicial}" size="10">
-							<f:convertNumber minFractionDigits="2" />
+						<h:outputLabel value="Descrição" for="descricao"/>
+						<h:inputText id="descricao" label="Descrição" value="#{usuarioBean.conta.descricao}" required="true" maxlength="45"/>
+						<h:outputLabel value="Saldo inicial: " for="saldoInicial"/>
+						<h:inputText id="saldoInicial" value="#{usuarioBean.conta.saldoInicial}" size="10">
+							<f:convertNumber minFractionDigits="2"/>
 						</h:inputText>
 					</h:panelGrid>
 				</fieldset>
 			</h:panelGroup>
-
-			<h:commandButton action="#{usuarioBean.salvar}" value="Salvar" />
+			<h:commandButton action="#{usuarioBean.salvar}" value="Salvar"/>
 		</h:form>
 	</ui:define>
 </ui:composition>

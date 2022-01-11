@@ -21,8 +21,8 @@ import financeiro.cheque.ChequeRN;
 import financeiro.conta.Conta;
 import financeiro.lancamento.Lancamento;
 import financeiro.lancamento.LancamentoRN;
-import financeiro.util.ContextoUtil;
 import financeiro.util.RNException;
+import financeiro.web.util.ContextoUtil;
 
 @ManagedBean(name = "lancamentoBean")
 @ViewScoped

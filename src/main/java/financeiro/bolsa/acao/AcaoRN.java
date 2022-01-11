@@ -6,6 +6,7 @@ import java.util.List;
 import financeiro.usuario.Usuario;
 import financeiro.util.DAOFactory;
 import financeiro.util.RNException;
+import financeiro.web.util.YahooFinanceUtil;
 
 public class AcaoRN {
 
@@ -34,7 +35,7 @@ public class AcaoRN {
 		return this.acaoDAO.listar(usuario);
 	}
 	
-	public List<AcaoVirtual> listarAcaoVirtual(Usuario usuario){
+	public List<AcaoVirtual> listarAcaoVirtual(Usuario usuario) throws RNException{
 		List<Acao> listaAcao = null;
 		List<AcaoVirtual> listaAcaoVirtual = new ArrayList<AcaoVirtual>();
 		AcaoVirtual acaoVirtual = null;
@@ -63,7 +64,7 @@ public class AcaoRN {
 		return listaAcaoVirtual;
 	}
 	
-	public String retornaCotacao(int indiceInformacao, Acao acao) {
+	public String retornaCotacao(int indiceInformacao, Acao acao) throws RNException {
 		YahooFinanceUtil yahooFinanceUtil = null;
 		String informacao = null;
 		try {

@@ -11,8 +11,9 @@ import javax.faces.context.FacesContext;
 import financeiro.bolsa.acao.Acao;
 import financeiro.bolsa.acao.AcaoRN;
 import financeiro.bolsa.acao.AcaoVirtual;
-import financeiro.util.ContextoUtil;
 import financeiro.util.RNException;
+import financeiro.web.util.ContextoUtil;
+import financeiro.web.util.YahooFinanceUtil;
 
 @ManagedBean(name = "acaoBean")
 @RequestScoped

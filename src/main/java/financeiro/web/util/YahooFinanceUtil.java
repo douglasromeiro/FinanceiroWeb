@@ -1,4 +1,4 @@
-package financeiro.util;
+package financeiro.web.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,21 +15,21 @@ public class YahooFinanceUtil {
 		private String[] informacoesCotacao;
 		public static final char ORIGEM_BOVESPA = 'B';
 		public static final char ORIGME_MUNDO = 'A';
-		private static final String LOCAL_BOVESPA = "br";
-		private static final String LOCAL_MUNDO = "download";
-		private static final String	POSFIXO_ACAO_BOVESPA = ".SA";
-		private static final String SEPARADOR_BOVESPA = ";";
-		private static final String SEPARADOR_MUNDO = ",";
-		private static final String INDICE_BOVESPA = "^BVSP";
-		private static final int SIGLA_ACAO_INDICE = 0;
-		private static final int ULTIMO_PRECO_DIA_ACAO_INDICE = 1;
-		private static final int DATA_NEGOCICAO_ACAO_INDICE = 2;
-		private static final int HORA_NEGOCIACAO_ACAO_INDICE = 3;
-		private static final int VARIACAO_DIA_ACAO_INDICE = 4;
-		private static final int PRECO_ABERTURA_DIA_ACAO_INDICE = 5;
-		private static final int MAIOR_PRECO_DIA_ACAO_INDICE = 6;
-		private static final int MENOR_PRECO_DIA_ACAO_INDICE = 7;
-		private static final int VOLUME_NEGOCIADO_DIA_ACAO_INDICE = 8;
+		public static final String LOCAL_BOVESPA = "br";
+		public static final String LOCAL_MUNDO = "download";
+		public static final String	POSFIXO_ACAO_BOVESPA = ".SA";
+		public static final String SEPARADOR_BOVESPA = ";";
+		public static final String SEPARADOR_MUNDO = ",";
+		public static final String INDICE_BOVESPA = "^BVSP";
+		public static final int SIGLA_ACAO_INDICE = 0;
+		public static final int ULTIMO_PRECO_DIA_ACAO_INDICE = 1;
+		public static final int DATA_NEGOCICAO_ACAO_INDICE = 2;
+		public static final int HORA_NEGOCIACAO_ACAO_INDICE = 3;
+		public static final int VARIACAO_DIA_ACAO_INDICE = 4;
+		public static final int PRECO_ABERTURA_DIA_ACAO_INDICE = 5;
+		public static final int MAIOR_PRECO_DIA_ACAO_INDICE = 6;
+		public static final int MENOR_PRECO_DIA_ACAO_INDICE = 7;
+		public static final int VOLUME_NEGOCIADO_DIA_ACAO_INDICE = 8;
 		
 		public YahooFinanceUtil(Acao acao) {
 			if(acao.getOrigem() == YahooFinanceUtil.ORIGEM_BOVESPA) {

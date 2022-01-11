@@ -4,23 +4,22 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"> 
 
-<ui:component template="/templates/interna.xhtml">
+<ui:composition template="/templates/interna.xhtml">
 	<ui:define name="titulo">
-		Cadastro de Ações
+    Cadastro de Ações
 	</ui:define>
-	
+
 	<ui:define name="corpo">
-		<h:outputScript name="heade">
-			var estiloGrafico = {
-			padding: 20,
-			legend:{
-				display: "right",
-				spacing: 10
-				}
-			};
-			
+		<h:outputScript target="head">
+		var estiloGrafico = {
+			padding :20,
+			legend : {
+				display :"right",
+				spacing :10
+			}
+		};
 		</h:outputScript>
-		
+
 		<ui:include src="acao_graficoscarteira.xhtml" />
 		<br />
 		<ui:include src="acao_edicao.xhtml" />
@@ -28,7 +27,6 @@
 		<ui:include src="acao_listagem.xhtml" />
 		<br />
 		<ui:include src="acao_graficos.xhtml" />
-		<br />
 	</ui:define>
-</ui:component>
+</ui:composition>
 </html>

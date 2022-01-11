@@ -5,10 +5,10 @@ import java.util.Locale;
 
 import financeiro.categoria.CategoriaRN;
 import financeiro.util.DAOFactory;
-import financeiro.util.MensagemUtil;
 import financeiro.util.RNException;
 import financeiro.util.UtilException;
 import financeiro.web.util.EmailUtil;
+import financeiro.web.util.MensagemUtil;
 
 
 public class UsuarioRN {

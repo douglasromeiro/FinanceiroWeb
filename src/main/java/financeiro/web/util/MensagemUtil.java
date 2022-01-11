@@ -1,4 +1,4 @@
-package financeiro.util;
+package financeiro.web.util;
 
 import java.text.MessageFormat;
 import java.util.Locale;

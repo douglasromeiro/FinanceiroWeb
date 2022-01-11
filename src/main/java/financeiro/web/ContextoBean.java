@@ -1,6 +1,5 @@
 package financeiro.web;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -17,20 +16,56 @@ import financeiro.conta.ContaRN;
 import financeiro.usuario.Usuario;
 import financeiro.usuario.UsuarioRN;
 
-@ManagedBean(name = "contextoBean")
+@ManagedBean(name="contextoBean")
 @SessionScoped
-public class ContextoBean implements Serializable { 
-
-	private static final long serialVersionUID = -2071855184464371947L; 
-	
+public class ContextoBean {
 	private Usuario usuarioLogado = null;
 	private Conta contaAtiva = null;
-	private Locale localizacao = null;
-	private List<Locale> idiomas; 
-	private int codigoContaAtiva = 0;
+	private Locale	      localizacao	  = null;
+	private List<Locale>	idiomas;
+	
+	public Usuario getUsuarioLogado(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		ExternalContext external = context.getExternalContext();
+		String login = external.getRemoteUser();
+		if(this.usuarioLogado == null || !login.equals(this.usuarioLogado.getLogin())){
+			if(login!=null){
+				UsuarioRN usuarioRN = new UsuarioRN();
+				this.usuarioLogado = usuarioRN.buscarPorLogin(login);
+				this.contaAtiva = null;
+			}
+		}
+		return usuarioLogado;
+	}
+	
+	public void setUsuarioLogado(Usuario usuario){
+		this.usuarioLogado = usuario;
+	}
+	
+	public Conta getContaAtiva(){
+		if(this.contaAtiva == null){
+			Usuario usuario = this.getUsuarioLogado();
+			ContaRN contaRN = new ContaRN();
+			this.contaAtiva = contaRN.buscarFavorita(usuario);
+			List<Conta> contas = contaRN.listar(usuario);
+			if(this.contaAtiva == null){
+				for(Conta conta:contas){
+					this.contaAtiva = conta;
+					break;
+				}
+			}
+		}
+		return this.contaAtiva;
+	}
+	
+	public void setContaAtiva(ValueChangeEvent event){
+		Integer conta = (Integer) event.getNewValue();
+		ContaRN contaRN = new ContaRN();
+		this.contaAtiva = contaRN.carregar(conta);
+	}
 	
 	public Locale getLocaleUsuario() {
-		if(this.localizacao == null) {
+		if (this.localizacao == null) {
 			Usuario usuario = this.getUsuarioLogado();
 			String idioma = usuario.getIdioma();
 			String[] info = idioma.split("_");
@@ -39,22 +74,7 @@ public class ContextoBean implements Serializable {
 		return this.localizacao;
 	}
 
-	public Usuario getUsuarioLogado() { 
-		FacesContext context = FacesContext.getCurrentInstance();
-		ExternalContext external = context.getExternalContext();
-		String login = external.getRemoteUser(); 
-		if (login != null) {
-			UsuarioRN usuarioRN = new UsuarioRN();
-			Usuario usuario = usuarioRN.buscarPorLogin(login);
-			String[] info = usuario.getIdioma().split("_");
-			Locale locale = new Locale(info[0], info[1]);
-			context.getViewRoot().setLocale(locale);
-			return usuario;
-		}
-		return null;
-	}
-	
-	public List<Locale> getIdiomas() { 
+	public List<Locale> getIdiomas() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		Iterator<Locale> locales = context.getApplication().getSupportedLocales();
 		this.idiomas = new ArrayList<Locale>();
@@ -68,47 +88,14 @@ public class ContextoBean implements Serializable {
 		UsuarioRN usuarioRN = new UsuarioRN();
 		this.usuarioLogado = usuarioRN.carregar(this.getUsuarioLogado().getCodigo());
 		this.usuarioLogado.setIdioma(idioma);
-		usuarioRN.salvar(usuarioLogado);
-		
+		usuarioRN.salvar(this.usuarioLogado);
+
 		String[] info = idioma.split("_");
 		Locale locale = new Locale(info[0], info[1]);
-		
+
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.getViewRoot().setLocale(locale);
 	}
 
-
-
-	public Conta getContaAtiva() {
-		Conta contaAtiva = null;
-		if (this.codigoContaAtiva == 0) {
-			contaAtiva = this.getContaAtivaPadrao();
-		} else {
-			ContaRN contaRN = new ContaRN();
-			contaAtiva = contaRN.carregar(this.codigoContaAtiva);
-		}
-		if (contaAtiva != null) {
-			this.codigoContaAtiva = contaAtiva.getConta();
-			return contaAtiva;	
-		}
-		return null;
-	}
 	
-	private Conta getContaAtivaPadrao() {
-		ContaRN contaRN = new ContaRN();
-		Conta contaAtiva = null;
-		Usuario usuario = this.getUsuarioLogado();
-		contaAtiva = contaRN.buscarFavorita(usuario);
-		if (contaAtiva == null) {
-			List<Conta> contas = contaRN.listar(usuario);
-			if (contas != null && contas.size() > 0) {
-				contaAtiva = contas.get(0);
-			}
-		}
-		return contaAtiva;
-	}
-
-	public void changeContaAtiva(ValueChangeEvent event) { 
-		this.codigoContaAtiva = (Integer) event.getNewValue();
-	}
 }

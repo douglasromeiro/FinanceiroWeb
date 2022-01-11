@@ -8,39 +8,25 @@
 
 <ui:composition>
 	<h:panelGrid style="margin: 0 auto;">
-		<h:form id="edicao">
-			<h:messages />
-			<h:inputHidden value="#{acaoBean.selecionada.acao.codigo}" />
-			<h:panelGrid columns="10">
-				<h:outputLabel value="Sigla" for="sigla" />
-				<h:inputText id="sigla" value="#{acaoBean.selecionada.acao.sigla}"
-					required="true" maxlength="10" size="10" />
-				<h:outputLabel value="Descrição" id="descricao" />
-				<h:inputText id="descricao"
-					value="#{acaoBean.seleciona.acao.descroicao}" maxlength="30"
-					size="10" />
-				<h:outputLabel value="Qt. de Quotas" for="quantidades" />
-				<h:inputText id="qauntidade"
-					value="#{acaoBean.selecionada.acao.quatidade}" required="true"
-					size="6">
-				</h:inputText>
-				<h:outputLabel value="Origem" for="origem" />
-				<h:selectOneMenu id="origem"
-					value="#{acaoBean.selecionada.acao.origem}">
-					<f:selectItem itemValue="B" itemLabel="Bovespa" />
-					<f:selectItem itemValue="M" itemLabel="Mundo" />
-				</h:selectOneMenu>
-				<p:commandButton value="Salvar" onclick="confirmation.show()" />
-				<p:confirmDialog message="Deseja salvar os dados?" header="Pergunta"
-					severity="info" widgetVar="confirmation">
-					<p:commandButton value="Sim"
-						update="edicao, listagem, graficosCarteira"
-						oncomplete="confirmation.hide()"
-						actionListener="#{acaoBean.salvar}" />
-					<p:commandButton value="Não" onclick="confirmation.hide()"
-						type="button" />
-				</p:confirmDialog>
-			</h:panelGrid>
+		<h:form id="graficosAcao">
+			<p:tabView>
+				<p:tab title="Gráfico Diário">
+					<h:graphicImage
+						value="http://ichart.finance.yahoo.com/z?s=#{acaoBean.linkCodigoAcao}&amp;t=1d&amp;z=s" />
+				</p:tab>
+				<p:tab title="Gráfico Trimestral">
+					<h:graphicImage
+						value="http://ichart.finance.yahoo.com/z?s=#{acaoBean.linkCodigoAcao}&amp;t=3m&amp;z=s" />
+				</p:tab>
+				<p:tab title="Gráfico Semestral">
+					<h:graphicImage
+						value="http://ichart.finance.yahoo.com/z?s=#{acaoBean.linkCodigoAcao}&amp;t=6m&amp;z=s" />
+				</p:tab>
+				<p:tab title="Gráfico Anual">
+					<h:graphicImage
+						value="http://ichart.finance.yahoo.com/z?s=#{acaoBean.linkCodigoAcao}&amp;t=1y&amp;z=s" />
+				</p:tab>
+			</p:tabView>
 		</h:form>
 	</h:panelGrid>
 </ui:composition>
